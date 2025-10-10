@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="site-header">
+<section id="about" class="about container">
+<h2>О нас</h2>
+<p>У нас — локальные бренды, качественные материалы и быстрая доставка по региону. Минимальный ассортимент с заботой о стиле.</p>
+</section>
+
+
+<section id="contacts" class="contacts container">
+<h2>Контакты</h2>
+<p>Email: info@modalab.example · Телефон: +996 700 000 000</p>
+</section>
+</main>
+
+
+<footer class="site-footer">
+<div class="container footer-inner">
+<p>© ModaLab — Пример магазина одежды, 2025</p>
+<nav>
+<a href="#">Политика конфиденциальности</a>
+<a href="#">Возврат</a>
+</nav>
+</div>
+</footer>
+
+
+<script>
+// Небольшой клиентский скрипт для демонстрации добавления в корзину
+const cartCountEl = document.getElementById('cartCount');
+let cartCount = 0;
+
+
+function updateCartCount() {
+cartCountEl.textContent = cartCount;
+}
+
+
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+btn.addEventListener('click', (e) => {
+cartCount++;
+updateCartCount();
+// Простое уведомление
+btn.textContent = 'Добавлено';
+setTimeout(() => btn.textContent = 'Добавить в корзину', 1200);
+});
+});
+
+
+// Поиск (локальный фильтр)
+const searchInput = document.querySelector('.search');
+searchInput.addEventListener('input', () => {
+const q = searchInput.value.trim().toLowerCase();
+document.querySelectorAll('.product-card').forEach(card => {
+const name = card.dataset.name.toLowerCase();
+card.style.display = name.includes(q) ? '' : 'none';
+});
+});
+</script>
+
+
+</body>
+</html>
