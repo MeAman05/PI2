@@ -32,13 +32,10 @@
         <div class="product-card" data-name="Толстовка">
             <h3>Толстовка</h3>
             <img src="https://via.placeholder.com/150?text=Толстовка" alt="Толстовка" />
-            <button class="add-to-cart">❤️ Добавить в корзину</button>
+            <button class="add-to-cart">Добавить в корзину</button>
         </div>
-        <div class="product-card" data-name="Шорты">
-            <h3>Шорты</h3>
-            <img src="https://via.placeholder.com/150?text=Шорты" alt="Шорты" />
-            <button class="add-to-cart">❤️ Добавить в корзину</button>
-        </div>
+
+        
     </section>
 
     <!-- Можно добавить элемент для отображения количества товаров в корзине -->
@@ -69,8 +66,8 @@
             btn.addEventListener('click', () => {
                 cartCount++;
                 updateCartCount();
-                btn.textContent = 'Добавлено с любовью ❤️';
-                setTimeout(() => btn.textContent = '❤️ Добавить в корзину', 1500);
+                btn.textContent = 'Добавлено ';
+                setTimeout(() => btn.textContent = ' Добавить в корзину', 1500);
             });
         });
 
