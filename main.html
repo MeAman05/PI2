@@ -1,70 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
 </head>
 <body>
     <header class="site-header">
-<section id="about" class="about container">
-<h2>О нас</h2>
-<p>У нас — локальные бренды, качественные материалы и быстрая доставка по региону. Минимальный ассортимент с заботой о стиле.</p>
-</section>
+        <!-- Тут можно добавить шапку сайта -->
+    </header>
 
+    <section id="about" class="about container">
+        <h2>О нас</h2>
+        <p>У нас — локальные бренды, качественные материалы и быстрая доставка по региону. Минимальный ассортимент с заботой о стиле.</p>
+    </section>
 
-<section id="contacts" class="contacts container">
-<h2>Контакты</h2>
-<p>Email: info@modalab.example · Телефон: +996 700 000 000</p>
-</section>
-</main>
+    <section id="contacts" class="contacts container">
+        <h2>Контакты</h2>
+        <p>Email: info@modalab.example · Телефон: +996 700 000 000</p>
+    </section>
 
+    <!-- Новая секция товаров -->
+    <section class="products container">
+        <h2>Товары</h2>
+        <div class="product-card" data-name="Футболка">
+            <h3>Футболка</h3>
+            <button class="add-to-cart">❤️ Добавить в корзину</button>
+        </div>
+        <div class="product-card" data-name="Толстовка">
+            <h3>Толстовка</h3>
+            <button class="add-to-cart">❤️ Добавить в корзину</button>
+        </div>
+    </section>
 
-<footer class="site-footer">
-<div class="container footer-inner">
-<p>© ModaLab — Пример магазина одежды, 2025</p>
-<nav>
-<a href="#">Политика конфиденциальности</a>
-<a href="#">Возврат</a>
-</nav>
-</div>
-</footer>
+    <!-- Можно добавить элемент для отображения количества товаров в корзине -->
+    <div style="position: fixed; top: 10px; right: 10px; background: #eee; padding: 5px 10px; border-radius: 5px;">
+        Корзина: <span id="cartCount">0</span>
+    </div>
 
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© ModaLab — Пример магазина одежды, 2025</p>
+            <nav>
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Возврат</a>
+            </nav>
+        </div>
+    </footer>
 
-<script>
-// Небольшой клиентский скрипт для демонстрации добавления в корзину
-const cartCountEl = document.getElementById('cartCount');
-let cartCount = 0;
+    <script>
+        // Счётчик товаров в корзине
+        const cartCountEl = document.getElementById('cartCount');
+        let cartCount = 0;
 
+        function updateCartCount() {
+            cartCountEl.textContent = cartCount;
+        }
 
-function updateCartCount() {
-cartCountEl.textContent = cartCount;
-}
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                cartCount++;
+                updateCartCount();
+                btn.textContent = 'Добавлено с любовью ❤️';
+                setTimeout(() => btn.textContent = '❤️ Добавить в корзину', 1500);
+            });
+        });
 
-
-document.querySelectorAll('.add-to-cart').forEach(btn => {
-btn.addEventListener('click', (e) => {
-cartCount++;
-updateCartCount();
-// Простое уведомление
-btn.textContent = 'Добавлено';
-setTimeout(() => btn.textContent = 'Добавить в корзину', 1200);
-});
-});
-
-
-// Поиск (локальный фильтр)
-const searchInput = document.querySelector('.search');
-searchInput.addEventListener('input', () => {
-const q = searchInput.value.trim().toLowerCase();
-document.querySelectorAll('.product-card').forEach(card => {
-const name = card.dataset.name.toLowerCase();
-card.style.display = name.includes(q) ? '' : 'none';
-});
-});
-</script>
-
-
+        // Поиск (локальный фильтр) - оставлено, если понадобится
+        const searchInput = document.querySelector('.search');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.trim().toLowerCase();
+                document.querySelectorAll('.product-card').forEach(card => {
+                    const name = card.dataset.name.toLowerCase();
+                    card.style.display = name.includes(q) ? '' : 'none';
+                });
+            });
+        }
+    </script>
 </body>
 </html>
