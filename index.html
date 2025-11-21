@@ -3,29 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Кто хочет стать миллионером — передача данных Кто хочет стать миллионером — передача данных</title>
+<title>Кто хочет стать миллионером — передача данных</title>
 <style>
-body{margin:0;font-family:Inter, sans-serif;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:12px;
-      background-image:url('https://cdn2.softswiss.net/duxcasino/b/evolution/Millionaire.jpg');
-      background-size:cover;
-      background-position:center;
-      background-repeat:no-repeat;
-      background-attachment:fixed;}
-.card{background:rgba(28,28,28,0.85);border-radius:12px;padding:20px;max-width:600px;width:100%;box-shadow:0 4px 16px rgba(0,0,0,0.7);text-align:center;}
-h1{margin:0 0 12px;font-size:20px;text-align:center;color:#fff}
-.options{display:flex;flex-direction:column;gap:12px;margin-top:20px}
-.option{background:#58738e;padding:12px;border-radius:8px;cursor:pointer;transition:0.3s}
-.option:hover{background:#3498db;color:#fff}
-.result{margin-top:16px;padding:10px;border-radius:6px;text-align:center;font-weight:bold}
+body{
+  margin:0;
+  font-family:Inter, sans-serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:12px;
+  background-image:url('https://cdn2.softswiss.net/duxcasino/b/evolution/Millionaire.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+.card{
+  background:rgba(28,28,28,0.85);
+  border-radius:12px;
+  padding:20px;
+  max-width:600px;
+  width:100%;
+  box-shadow:0 4px 16px rgba(0,0,0,0.7);
+  text-align:center;
+}
+h1{
+  margin:0 0 12px;
+  font-size:20px;
+  text-align:center;
+  color:#fff;
+}
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:20px;
+}
+.option{
+  background:#58738e;
+  padding:12px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.option:hover{
+  background:#3498db;
+  color:#fff;
+}
+.result{
+  margin-top:16px;
+  padding:10px;
+  border-radius:6px;
+  text-align:center;
+  font-weight:bold;
+}
 .correct{background:#d6dbd8}
 .wrong{background:#2fbb65}
-.scoreboard{margin-top:12px;padding:10px;border-radius:6px;text-align:center;background:rgba(15,52,96,0.85);color:#fff;font-weight:bold}
-button{margin-top:20px;padding:10px 14px;border:none;border-radius:8px;color:#fff;background:#3498db;cursor:pointer;transition:0.3s}
-button:hover{background:#d0560f}
+.scoreboard{
+  margin-top:12px;
+  padding:10px;
+  border-radius:6px;
+  text-align:center;
+  background:rgba(15,52,96,0.85);
+  color:#fff;
+  font-weight:bold;
+}
+button{
+  margin-top:20px;
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  color:#fff;
+  background:#3498db;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{
+  background:#d0560f;
+}
 </style>
 </head>
 <body>
+
 <div class="card" id="gameCard"></div>
+
+<!-- *** КНОПКА ВНИЗУ ДЛЯ ПЕРЕХОДА НА ДРУГУЮ СТРАНИЦУ *** -->
+<div style="
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;">
+  <button onclick="window.location.href='extra.html'"
+          style="
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;">
+    Доп. вопросы
+  </button>
+</div>
+
 <script>
 const allQuestions=[
 {q:'Что такое IP?',options:['Протокол передачи файлов','Адрес устройства в сети','Служба почты','Устройство маршрутизации'],answer:1},
@@ -49,7 +134,12 @@ const allQuestions=[
 {q:'HTTPS это?',options:['Защищённый веб-протокол','Обычный веб-протокол','FTP протокол','UDP протокол'],answer:0},
 {q:'Proxy это?',options:['Промежуточный сервер','Протокол передачи','Сокет','Маршрутизатор'],answer:0}
 ];
-let remainingQuestions=[]; let currentQuestion=null; let score=0; let askedCorrect=0; const maxQuestions=6;
+
+let remainingQuestions=[];
+let currentQuestion=null;
+let score=0;
+let askedCorrect=0;
+const maxQuestions=6;
 const gameCard=document.getElementById('gameCard');
 
 function startGame(){
@@ -75,35 +165,62 @@ function renderNextQuestion(){
 
 function renderQuestion(q){
   gameCard.innerHTML='';
-  const h1=document.createElement('h1'); h1.textContent=q.q; gameCard.appendChild(h1);
-  const optionsDiv=document.createElement('div'); optionsDiv.className='options';
+  const h1=document.createElement('h1');
+  h1.textContent=q.q;
+  gameCard.appendChild(h1);
+
+  const optionsDiv=document.createElement('div');
+  optionsDiv.className='options';
+
   q.options.forEach((opt,i)=>{
-    const btn=document.createElement('div'); btn.className='option'; btn.textContent=opt;
+    const btn=document.createElement('div');
+    btn.className='option';
+    btn.textContent=opt;
     btn.onclick=()=>checkAnswer(i);
     optionsDiv.appendChild(btn);
   });
+
   gameCard.appendChild(optionsDiv);
-  const scoreDiv=document.createElement('div'); scoreDiv.className='scoreboard'; scoreDiv.textContent='Баллы: '+score;
+
+  const scoreDiv=document.createElement('div');
+  scoreDiv.className='scoreboard';
+  scoreDiv.textContent='Баллы: '+score;
   gameCard.appendChild(scoreDiv);
-  const feedbackDiv=document.createElement('div'); feedbackDiv.id='feedback'; feedbackDiv.className='result'; feedbackDiv.hidden=true;
+
+  const feedbackDiv=document.createElement('div');
+  feedbackDiv.id='feedback';
+  feedbackDiv.className='result';
+  feedbackDiv.hidden=true;
   gameCard.appendChild(feedbackDiv);
 }
 
 function checkAnswer(i){
   const optionsDiv=gameCard.querySelectorAll('.option');
   const feedbackDiv=gameCard.querySelector('#feedback');
+
   if(i===currentQuestion.answer){
-    optionsDiv[i].style.background='#16a34a'; score+=1000;
-    feedbackDiv.textContent='Правильно!'; feedbackDiv.className='result correct'; feedbackDiv.hidden=false;
-    askedCorrect++; remainingQuestions.splice(remainingQuestions.indexOf(currentQuestion),1);
+    optionsDiv[i].style.background='#16a34a';
+    score+=1000;
+    feedbackDiv.textContent='Правильно!';
+    feedbackDiv.className='result correct';
+    feedbackDiv.hidden=false;
+
+    askedCorrect++;
+    remainingQuestions.splice(remainingQuestions.indexOf(currentQuestion),1);
+
     setTimeout(()=>{
       gameCard.innerHTML+='<button onclick="renderNextQuestion()">Следующий вопрос</button>';
     },500);
   } else {
     optionsDiv[i].style.background='#dc2626';
     optionsDiv[currentQuestion.answer].style.background='#16a34a';
-    feedbackDiv.textContent='Неправильно!'; feedbackDiv.className='result wrong'; feedbackDiv.hidden=false;
+
+    feedbackDiv.textContent='Неправильно!';
+    feedbackDiv.className='result wrong';
+    feedbackDiv.hidden=false;
+
     remainingQuestions.splice(remainingQuestions.indexOf(currentQuestion),1);
+
     setTimeout(()=>{
       gameCard.innerHTML='<h1>Вы ошиблись!</h1><p>Ваши баллы: '+score+'</p><button onclick="startGame()">Начать заново</button>';
     },1000);

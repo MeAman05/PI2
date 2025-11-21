@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дополнительные вопросы</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Inter, sans-serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:12px;
+
+  background-image:url('https://cdn2.softswiss.net/duxcasino/b/evolution/Millionaire.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+.card{
+  background:rgba(28,28,28,0.85);
+  border-radius:12px;
+  padding:26px;
+  max-width:600px;
+  width:100%;
+  box-shadow:0 4px 16px rgba(0,0,0,0.7);
+  text-align:center;
+}
+h1{
+  margin:0 0 12px;
+  font-size:24px;
+  font-weight:700;
+  color:#fff;
+}
+p{
+  opacity:0.9;
+  font-size:16px;
+  line-height:1.5;
+  margin-bottom:20px;
+}
+button{
+  margin-top:15px;
+  padding:12px 18px;
+  border:none;
+  border-radius:8px;
+  color:#fff;
+  background:#3498db;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:16px;
+}
+button:hover{
+  background:#1f7ec4;
+}
+
+.option-btn{
+  background:#58738e;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.option-btn:hover{
+  background:#3498db;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Дополнительные вопросы</h1>
+  <p>Здесь могут быть новые категории, режимы игры или расширенные вопросы.<br>
+  Ты можешь изменить этот блок под себя.</p>
+
+  <!-- Пример дополнительных кнопок -->
+  <div class="option-btn" onclick="alert('Скоро будут новые вопросы!')">
+    Сетевые вопросы (дополнительно)
+  </div>
+
+  <div class="option-btn" onclick="alert('Добавим позже!')">
+    Вопросы по JavaScript
+  </div>
+
+  <div class="option-btn" onclick="alert('Добавим позже!')">
+    Вопросы по безопасности (CyberSec)
+  </div>
+
+  <button onclick="window.location.href='index.html'">
+    Вернуться в игру
+  </button>
+</div>
+
+</body>
+</html>
