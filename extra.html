@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кто хочет стать миллионером — передача данных</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Inter, sans-serif;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:12px;
+      background-image:url('https://cdn2.softswiss.net/duxcasino/b/evolution/Millionaire.jpg');
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      background-attachment:fixed;
+      transition: background-image 1s ease-in-out;
+    }
+    .card{
+      background:rgba(28,28,28,0.85);
+      border-radius:12px;
+      padding:20px;
+      max-width:600px;
+      width:100%;
+      box-shadow:0 4px 16px rgba(0,0,0,0.7);
+      text-align:center;
+    }
+    h1{
+      margin:0 0 12px;
+      font-size:20px;
+      text-align:center;
+      color:#fff;
+    }
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:20px;
+    }
+    .option{
+      background:#58738e;
+      padding:12px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:0.3s;
+      opacity:0;
+    }
+    .option:hover{
+      background:#3498db;
+      color:#fff;
+    }
+    .result{
+      margin-top:16px;
+      padding:10px;
+      border-radius:6px;
+      text-align:center;
+      font-weight:bold;
+    }
+    .correct{background:#d6dbd8}
+    .wrong{background:#2fbb65}
+    .scoreboard{
+      margin-top:12px;
+      padding:10px;
+      border-radius:6px;
+      text-align:center;
+      background:rgba(15,52,96,0.85);
+      color:#fff;
+      font-weight:bold;
+    }
+    button{
+      margin-top:20px;
+      padding:10px 14px;
+      border:none;
+      border-radius:8px;
+      color:#fff;
+      background:#3498db;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    button:hover{
+      background:#d0560f;
+    }
+    #timer {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+      .card {
+        max-width: 100%;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="gameCard"></div>
+
+  <!-- Кнопка перехода на другую страницу -->
+  <div style="position: fixed; bottom: 20px; left: 0; width: 100%; display: flex; justify-content: center;">
+    <button onclick="window.location.href='extra.html'">Перейти на другую страницу</button>
+  </div>
+
+  <script>
+    // Все вопросы и ответы
+    const allQuestions = [
+      {q: 'Что такое IP?', options: ['Протокол передачи файлов', 'Адрес устройства в сети', 'Служба почты', 'Устройство маршрутизации'], answer: 1},
+      {q: 'HTTP используется для?', options: ['Передачи веб-страниц', 'Отправки почты', 'Создания VPN', 'Коммутатор сети'], answer: 0},
+      {q: 'FTP это?', options: ['Протокол передачи файлов', 'Протокол отправки почты', 'Проверка доступности узла', 'Защищённое соединение'], answer: 0},
+      {q: 'SMTP служит для?', options: ['Проверки пакетов', 'Отправки почты', 'Шифрования данных', 'Создания сокета'], answer: 1},
+      {q: 'TCP обеспечивает?', options: ['Быструю передачу без контроля ошибок', 'Надёжную передачу данных', 'Пропускную способность сети', 'Адресацию'], answer: 1},
+      {q: 'UDP обеспечивает?', options: ['Быструю передачу без контроля ошибок', 'Надёжную передачу данных', 'Проверку DNS', 'Маршрутизацию'], answer: 0},
+      {q: 'DNS это?', options: ['Служба преобразования имени в IP', 'Протокол HTTP', 'Протокол FTP', 'Протокол SMTP'], answer: 0},
+      {q: 'LAN это?', options: ['Локальная сеть', 'Глобальная сеть', 'Сокет', 'Виртуальная сеть'], answer: 0},
+      {q: 'WAN это?', options: ['Локальная сеть', 'Глобальная сеть', 'Сокет', 'VPN'], answer: 1},
+      {q: 'Router это?', options: ['Коммутатор', 'Устройство маршрутизации пакетов', 'Проверка пинга', 'Сокет'], answer: 1},
+      {q: 'Switch это?', options: ['Коммутатор сети', 'Устройство маршрутизации', 'Проверка задержки', 'VPN'], answer: 0},
+      {q: 'Packet это?', options: ['Единица передачи данных', 'Протокол отправки', 'Сокет', 'Адрес'], answer: 0},
+      {q: 'Latency это?', options: ['Пропускная способность', 'Задержка передачи данных', 'Скорость процессора', 'DNS сервер'], answer: 1},
+      {q: 'Bandwidth это?', options: ['Пропускная способность сети', 'Задержка передачи', 'IP адрес', 'Сокет'], answer: 0},
+      {q: 'Ping используется для?', options: ['Проверки доступности узла', 'Отправки файлов', 'Создания VPN', 'Маршрутизации'], answer: 0},
+      {q: 'MAC это?', options: ['Уникальный адрес сетевого устройства', 'Протокол передачи', 'Сокет', 'Проверка DNS'], answer: 0},
+      {q: 'Socket это?', options: ['Точка соединения в сети', 'Протокол HTTP', 'Пропускная способность', 'IP адрес'], answer: 0},
+      {q: 'VPN это?', options: ['Защищённое соединение через интернет', 'Проверка пакетов', 'Маршрутизатор', 'Коммутатор'], answer: 0},
+      {q: 'HTTPS это?', options: ['Защищённый веб-протокол', 'Обычный веб-протокол', 'FTP протокол', 'UDP протокол'], answer: 0},
+      {q: 'Proxy это?', options: ['Промежуточный сервер', 'Протокол передачи', 'Сокет', 'Маршрутизатор'], answer: 0}
+    ];
+
+    let remainingQuestions = [];
+    let currentQuestion = null;
+    let score = 0;
+    let askedCorrect = 0;
+    const maxQuestions = 6;
+    const gameCard = document.getElementById('gameCard');
+    let countdownTimer;
+
+    // Звук для правильных/неправильных ответов
+    function playSound(isCorrect) {
+      const audio = new Audio(isCorrect ? 'correct-sound.mp3' : 'wrong-sound.mp3');
+      audio.play();
+    }
+
+    // Начать игру
+    function startGame() {
+      remainingQuestions = allQuestions.slice();
+      score = 0;
+      askedCorrect = 0;
+      renderNextQuestion();
+      changeBackground();  // Меняем фон при старте
+    }
+
+    // Изменить фон
+    function changeBackground() {
+      const backgrounds = [
+        'https://cdn2.softswiss.net/duxcasino/b/evolution/Millionaire.jpg',
+        'https://example.com/another-image.jpg',
+        'https://example.com/third-image.jpg'
+      ];
+      const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+      document.body.style.backgroundImage = `url(${randomBackground})`;
+    }
+
+    // Таймер
+    function startTimer() {
+      let timeLeft = 30;
+      const timerDiv = document.createElement('div');
+      timerDiv.id = 'timer';
+      gameCard.appendChild(timerDiv);
+
+      countdownTimer = setInterval(() => {
+        timerDiv.textContent = 'Осталось времени: ' + timeLeft + ' сек';
+        if (timeLeft <= 0) {
+          clearInterval(countdownTimer);
+          gameCard.innerHTML = '<h1>Время вышло!</h1><p>Ваши баллы: ' + score + '</p><button onclick="startGame()">Начать заново</button>';
+        }
+        timeLeft--;
+      }, 1000);
+    }
+
+    // Отображение следующего вопроса
+    function renderNextQuestion() {
+      if (askedCorrect >= maxQuestions) {
+        gameCard.innerHTML = '<h1>Поздравляем! Вы победили!</h1><p>Ваши баллы: ' + score + '</p><button onclick="startGame()">Играть заново</button>';
+        return;
+      }
+      if (remainingQuestions.length === 0) {
+        gameCard.innerHTML = '<h1>Вопросы закончились!</h1><p>Ваши баллы: ' + score + '</p><button onclick="startGame()">Играть заново</button>';
+        return;
+      }
+      let idx = Math.floor(Math.random() * remainingQuestions.length);
+      currentQuestion = remainingQuestions[idx];
+      renderQuestion(currentQuestion);
+      startTimer();  // Запуск таймера для каждого вопроса
+    }
+
+    // Отображение вопроса и вариантов ответа
+    function renderQuestion(q) {
+      gameCard.innerHTML = '';
+      const h1 = document.createElement('h1');
+      h1.textContent = q.q;
+      gameCard.appendChild(h1);
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options';
+
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('div');
+        btn.className = 'option';
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(i);
+        optionsDiv.appendChild(btn);
+      });
+
+      gameCard.appendChild(optionsDiv);
+
+      const scoreDiv = document.createElement('div');
+      scoreDiv.className = 'scoreboard';
+      scoreDiv.textContent = 'Баллы: ' + score;
+      gameCard.appendChild(scoreDiv);
+
+      const feedbackDiv = document.createElement('div');
+      feedbackDiv.id = 'feedback';
+      feedbackDiv.className = 'result';
+      feedbackDiv.hidden = true;
+      gameCard.appendChild(feedbackDiv);
+
+      // Анимация появления вопросов и вариантов
+      setTimeout(() => {
+        h1.style.transition = 'opacity 1s';
+        h1.style.opacity = 1;
+        optionsDiv.querySelectorAll('.option').forEach((btn, i) => {
+          btn.style.transition = 'opacity 0.5s';
+          setTimeout(() => {
+            btn.style.opacity = 1;
+          }, i * 200);
+        });
+      }, 100);
+    }
+
+    // Проверка ответа
+    function checkAnswer(i) {
+      const optionsDiv = gameCard.querySelectorAll('.option');
+      const feedbackDiv = gameCard.querySelector('#feedback');
+
+      if (i === currentQuestion.answer) {
+        optionsDiv[i].style.background = '#16a34a';
+        score += 1000;
+        feedbackDiv.textContent = 'Правильно!';
+        feedbackDiv.className = 'result correct';
+        feedbackDiv.hidden = false;
+        playSound(true);
+
+        askedCorrect++;
+        remainingQuestions.splice(remainingQuestions.indexOf(currentQuestion), 1);
+
+        setTimeout(() => {
+          gameCard.innerHTML += '<button onclick="renderNextQuestion()">Следующий вопрос</button>';
+        }, 500);
+      } else {
+        optionsDiv[i].style.background = '#dc2626';
+        optionsDiv[currentQuestion.answer].style.background = '#16a34a';
+
+        feedbackDiv.textContent = 'Неправильно!';
+        feedbackDiv.className = 'result wrong';
+        feedbackDiv.hidden = false;
+        playSound(false);
+
+        remainingQuestions.splice(remainingQuestions.indexOf(currentQuestion), 1);
+
+        setTimeout(() => {
+          gameCard.innerHTML = '<h1>Вы ошиблись!</h1><p>Ваши баллы: ' + score + '</p><button onclick="startGame()">Начать заново</button>';
+        }, 1000);
+      }
+    }
+
+    // Запуск игры
+    startGame();
+  </script>
+
+</body>
+</html>
